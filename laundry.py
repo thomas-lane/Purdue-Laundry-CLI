@@ -16,7 +16,7 @@ def get_laundry_status(place=None):
     places = list()
 
     for value in laundry_dictionary:
-        if place != None and place not in value:
+        if place != None and place.lower() not in value.lower():
             continue
 
         total_washers_in_use = 0

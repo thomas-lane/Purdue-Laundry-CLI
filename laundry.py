@@ -68,8 +68,8 @@ def get_laundry_status(place=None):
 
     return places
 
-def print_width(toPrint, width):
-    click.echo(toPrint, nl=False)
+def print_width(toPrint, width, color = None):
+    click.echo(click.style(toPrint, fg=color), nl=False)
 
     click.echo(" " * (width - len(toPrint)), nl=False)
 
@@ -83,7 +83,7 @@ def laundry(room):
     click.echo('    Laundry Machines Available at Purdue University    ')
     click.echo('=======================================================')
     click.echo()
-    
+
     status = get_laundry_status(room)
 
     if len(status) == 0:
@@ -93,7 +93,7 @@ def laundry(room):
         click.echo('-------------------------------------------------------')
     
         for place in status:
-            print_width(click.style(place[0], fg='green'), 40)
+            print_width(place[0], 40, 'green')
             print_width(str(place[1][0]) + '/' + str(place[1][4]), 8)
             print_width(str(place[2][0]) + '/' + str(place[2][4]), 8)
             click.echo()

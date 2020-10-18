@@ -10,6 +10,7 @@ def get_laundry_status(place=None):
     available = "Available"
     almost_done = "Almost done"
     end_of_cycle = "End of cycle"
+    out_of_order = "Out of order"
 
     laundry_dictionary = get_laundry_dictionary()
 
@@ -23,6 +24,7 @@ def get_laundry_status(place=None):
         total_washers_available = 0
         total_washers_almost_done = 0
         total_washers_end_of_cycle = 0
+        total_washers_out_of_order = 0
 
         total_washers = 0
 
@@ -30,6 +32,7 @@ def get_laundry_status(place=None):
         total_dryers_available = 0
         total_dryers_almost_done = 0
         total_dryers_end_of_cycle = 0
+        total_dryers_out_of_order = 0
 
         total_dryers = 0
 
@@ -62,9 +65,21 @@ def get_laundry_status(place=None):
                 elif dict["type"] == "Dryer":
                     total_dryers_end_of_cycle += 1
                     total_dryers += 1
+            elif dict["status"] == out_of_order:
+                if dict["type"] == "Washer":
+                    total_washers_out_of_order += 1
+                    total_washers += 1
+                elif dict["type"] == "Dryer":
+                    total_washers_out_of_order += 1
+                    total_dryers += 1
+            else:
+                if dict["type"] == "Washer":
+                    total_washers += 1
+                elif dict["type"] == "Dryer":
+                    total_dryers += 1
         
-        places.append((value, (total_washers_available, total_washers_in_use, total_washers_almost_done, total_washers_end_of_cycle, total_washers), \
-            (total_dryers_available, total_dryers_in_use, total_dryers_almost_done, total_dryers_end_of_cycle, total_dryers)))
+        places.append((value, (total_washers_available, total_washers_in_use, total_washers_almost_done, total_washers_end_of_cycle, total_washers_out_of_order, total_washers), \
+            (total_dryers_available, total_dryers_in_use, total_dryers_almost_done, total_dryers_end_of_cycle, total_dryers_out_of_order, total_dryers)))
 
     return places
 
@@ -94,8 +109,8 @@ def laundry(room):
     
         for place in status:
             print_width(place[0], 40, 'green')
-            print_width(str(place[1][0]) + '/' + str(place[1][4]), 8)
-            print_width(str(place[2][0]) + '/' + str(place[2][4]), 8)
+            print_width(str(place[1][0]) + '/' + str(place[1][5]), 8)
+            print_width(str(place[2][0]) + '/' + str(place[2][5]), 8)
             click.echo()
 
 if __name__ == "__main__":
